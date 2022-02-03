@@ -19,14 +19,6 @@ public class LinkedList {
             this.next = null;
 
         }
-
-        public boolean hasNext() {
-            if (head.next != null) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     }
     // This is the basic values of a Node class,
     // I've read about it on here :
@@ -56,7 +48,7 @@ public class LinkedList {
         listTwo.add(23);
         listTwo.add(4);
         listTwo.add(2);
-        Visual.selectionMenu(Visual.choices());
+        Visual.listSelect();
         System.out.println("This is list one : " + listOne);
         System.out.println("This is list two : " + listTwo);
         System.out.println("The size is for list one is: " + listOne.size());
@@ -88,6 +80,9 @@ public class LinkedList {
     // I expended for the control of two Linked List
     public void remove(int removeInt) {
         Node temp = head, prev = null;
+        System.out.println("The list number "+ Visual.listChoice + " contains the following numbers:");
+        System.out.println(Visual.listSelected);
+
         if (temp != null && temp.data == removeInt) temp = temp.next;
         while (temp != null && temp.data != removeInt) {
             prev = temp;
@@ -169,28 +164,37 @@ public class LinkedList {
         while (n1 != null) {
             tempL1.add(n1.data);
             n1 = n1.next;
+            counter++;
+            System.out.println("Temp List 1: " + tempL1 + " Number of passage : " + counter);
         }
+        counter = 0;
         while (n2 != null) {
             tempL2.add(n2.data);
             n2 = n2.next;
+            counter++;
+            System.out.println("Temp list 2 :" + tempL2 + " Number of passage : " + counter);
         }
-        Node t1 = tempL1.head;
         Node t2 = tempL2.head;
         if (listOne.size() != listTwo.size() || listTwo.size() != listOne.size()) {
             return false;
         }
+        counter = 0;
         while (t2 != null)
             if (tempL1.contain(t2.data)) {
                 tempL1.remove(t2.data);
                 t2 = t2.next;
                 counter++;
-                System.out.println("List 1: " + tempL1);
-                System.out.println("List 2: " + tempL2);
+                System.out.println("List 1: " + tempL1 + " Number of passage : " + counter);
+                System.out.println("List 2: " + tempL2 + " Number of passage : " + counter);
             }
-        if (counter == listOne.size()) {
-            return true;
-        } else {
-            return false;
+        t2 = n2;
+        while (tempL1 == null && t2 != null){
+            if (tempL2 != null) {
+            tempL2.remove(t2.data);
+            t2= t2.next;
+            }
         }
+
+        return counter == listOne.size();
     }
 }
