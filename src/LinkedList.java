@@ -51,7 +51,6 @@ public class LinkedList {
         listTwo.add(23);
         listTwo.add(4);
         listTwo.add(2);
-        Visual.listSelect();
         System.out.println("This is list one : " + listOne);
         System.out.println("This is list two : " + listTwo);
         System.out.println("The size is for list one is: " + listOne.size());
@@ -59,6 +58,8 @@ public class LinkedList {
         System.out.println("Does list one contain: " + listOne.contain(15));
         System.out.println("Compare: " + listOne.compare());
         System.out.println("Magic Compare: " + listOne.magicCompare());
+        Visual.listSelect();
+
     }
 
     // 1 Option Add Node, followed this site to understand and create the add (append) - https://www.geeksforgeeks.org/linked-list-set-2-inserting-a-node/
