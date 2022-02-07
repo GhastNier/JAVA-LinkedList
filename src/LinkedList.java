@@ -1,14 +1,10 @@
+import java.util.Objects;
+
 public class LinkedList {
     public Node head;
 
     //This was created in order to save time. Didn't take it from anywhere.
-    public boolean hasNext() {
-        if (head.next != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     class Node {
         int data;
@@ -17,7 +13,6 @@ public class LinkedList {
         Node(int d) {
             this.data = d;
             this.next = null;
-
         }
     }
     // This is the basic values of a Node class,
@@ -33,14 +28,22 @@ public class LinkedList {
     static LinkedList listOne = new LinkedList();
     static LinkedList listTwo = new LinkedList();
 
+    public boolean hasNext() {
+        if (head.next != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
-        listOne.add(4);
-        listOne.add(3);
-        listOne.add(23);
-        listOne.add(2);
-        listOne.add(2);
         listOne.add(1);
         listOne.add(15);
+        listOne.add(2);
+        listOne.add(3);
+        listOne.add(23);
+        listOne.add(4);
+        listOne.add(2);
         listTwo.add(1);
         listTwo.add(15);
         listTwo.add(2);
@@ -63,7 +66,7 @@ public class LinkedList {
     public void add(int newInt) {
         Node newNode = new Node(newInt);
         if (head == null) { // Add a new node at the head
-            head = new Node(newInt);
+            head = newNode;
             return;
         }
         newNode.next = null;
@@ -74,24 +77,29 @@ public class LinkedList {
         return;
     }
 
+
     // As above, followed the tutorial from GeeksForGeeks:
     // https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/)
     // This helped me understand the flow of Nodes and how to manipulate them.
     // I expended for the control of two Linked List
     public void remove(int removeInt) {
-        Node temp = head, prev = null;
-        System.out.println("The list number "+ Visual.listChoice + " contains the following numbers:");
-        System.out.println(Visual.listSelected);
-
-        if (temp != null && temp.data == removeInt) temp = temp.next;
-        while (temp != null && temp.data != removeInt) {
-            prev = temp;
-            temp = temp.next;
+        {
+            Node temp = head, prev = null;
+            if (temp != null && temp.data == removeInt) {
+                head = temp.next;
+                return;
+            }
+            while (temp != null && temp.data != removeInt) {
+                prev = temp;
+                temp = temp.next;
+            }
+            if (temp == null) {
+                System.out.println("The list doesn't contains the number: " + removeInt);
+                System.out.println("-- " + Visual.listSelected + " --");
+                return;
+            }
+            prev.next = temp.next;
         }
-        if (temp == null) return;
-        else prev.next = temp.next;
-        return;
-
     }
     // Used this idea here for the toString:
     // https://www.geeksforgeeks.org/convert-linkedlist-to-string-in-java/
@@ -143,58 +151,45 @@ public class LinkedList {
     }
 
     // No inspiration here, from scratch.
-    public boolean compare() {
-        Node temp = head;
-        Node l2now = listTwo.head;
-        while (listOne.hasNext() || listTwo.hasNext()) {
-            if (temp != l2now) return false;
-            temp = temp.next;
-            l2now = l2now.next;
+    public static boolean compare() {
+        Node temp = listOne.head;
+        Node temp2 = listTwo.head;
+        if (listOne.size() != listTwo.size()) {
+            System.out.println(listOne.size() + " & " + listTwo.size());
+            return false;
         }
-        return true;
+        while (temp.data == temp2.data) {
+            if (temp.next != null) {
+                temp = temp.next;
+                temp2 = temp2.next;
+            } else return true;
+        }
+        return false;
     }
 
     // Same as Compare.
     public boolean magicCompare() {
         int counter = 0;
-        LinkedList tempL2 = new LinkedList();
         LinkedList tempL1 = new LinkedList();
         Node n1 = listOne.head;
-        Node n2 = listTwo.head;
+
         while (n1 != null) {
             tempL1.add(n1.data);
             n1 = n1.next;
             counter++;
-            System.out.println("Temp List 1: " + tempL1 + " Number of passage : " + counter);
+
         }
-        counter = 0;
-        while (n2 != null) {
-            tempL2.add(n2.data);
-            n2 = n2.next;
-            counter++;
-            System.out.println("Temp list 2 :" + tempL2 + " Number of passage : " + counter);
-        }
-        Node t2 = tempL2.head;
+        Node t2 = listTwo.head;
         if (listOne.size() != listTwo.size() || listTwo.size() != listOne.size()) {
             return false;
         }
-        counter = 0;
         while (t2 != null)
             if (tempL1.contain(t2.data)) {
                 tempL1.remove(t2.data);
                 t2 = t2.next;
-                counter++;
-                System.out.println("List 1: " + tempL1 + " Number of passage : " + counter);
-                System.out.println("List 2: " + tempL2 + " Number of passage : " + counter);
+                System.out.println("Temp List 1: " + tempL1 + " Number of passage : " + counter);
+                System.out.println("List 2: " + listTwo );
             }
-        t2 = n2;
-        while (tempL1 == null && t2 != null){
-            if (tempL2 != null) {
-            tempL2.remove(t2.data);
-            t2= t2.next;
-            }
-        }
-
-        return counter == listOne.size();
+        return tempL1.size() == 0;
     }
 }

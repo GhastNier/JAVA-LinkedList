@@ -5,12 +5,6 @@ public class Visual {
     public static int listChoice;
     static LinkedList listSelected;
 
-    static {
-        if (listChoice == 1) {
-            listSelected = LinkedList.listOne;
-        } else listSelected = LinkedList.listTwo;
-    }
-
     public static void listSelect() {
         Scanner scanList;
         int listNum;
@@ -21,14 +15,18 @@ public class Visual {
         listNum = Integer.parseInt(scanList.nextLine());
         if (listNum < 1 || listNum > 2) {
             System.out.println("Please enter the number associated with the list: 1 or 2.");
-            listNum = Integer.parseInt(scanList.nextLine());
+            listNum = scanList.nextInt();
             System.out.println("==========================================");
         }
         System.out.println("==========================================");
         listChoice = listNum;
+        if (listChoice == 1) {
+            listSelected = LinkedList.listOne;
+        } else {
+            listSelected = LinkedList.listTwo;
+        }
         selectionMenu(choices());
     }
-
 
     public static int choices() {
         Scanner scanChoice = new Scanner(System.in);
@@ -70,7 +68,7 @@ public class Visual {
                 System.out.println("==========================================");
                 switch (next) {
                     case 1 -> selectionMenu(1);
-                    case 2 -> choices();
+                    case 2 -> selectionMenu(choices());
                     default -> {
                         System.out.println("Please enter the number associated with 1. Yes and 2. No.");
                         scanCase1.nextLine();
@@ -81,7 +79,8 @@ public class Visual {
                 System.out.println("==========================================");
                 Scanner scanCase2 = new Scanner(System.in);
                 System.out.println("Please enter the number that you wish to remove from list #" + listChoice);
-                System.out.println(listSelected);
+                System.out.println("The list number " + Visual.listChoice + " contains the following numbers:");
+                System.out.println("-- " + Visual.listSelected + " --");
                 listSelected.remove(Integer.parseInt(scanCase2.nextLine()));
                 System.out.println("==========================================");
                 System.out.println("Would you like to remove another Number from list #" + listChoice + "? (1 or 2)");
@@ -91,7 +90,7 @@ public class Visual {
                 System.out.println("==========================================");
                 switch (nextRm) {
                     case 1 -> selectionMenu(2);
-                    case 2 -> choices();
+                    case 2 -> selectionMenu(choices());
                     default -> {
                         System.out.println("Please enter the number associated with 1. Yes and 2. No.");
                         scanCase2.nextLine();
@@ -101,7 +100,7 @@ public class Visual {
                 System.out.println("==========================================");
                 System.out.println("The List # " + listChoice + " size is: " + listSelected.size() + " number(s).");
                 System.out.println("==========================================");
-                choices();
+                selectionMenu(choices());
 
             case 4:
                 System.out.println("==========================================");
@@ -134,14 +133,14 @@ public class Visual {
                 System.out.println("==========================================");
                 System.out.println("List # " + listChoice + " is as follow: \r\n" + listSelected);
                 System.out.println("==========================================");
-                choices();
+                selectionMenu(choices());
 
             case 6:
                 System.out.println("==========================================");
-                if (!LinkedList.listOne.compare()) {
-                    System.out.println("The two list aren't the same");
-                } else {
+                if (LinkedList.compare()) {
                     System.out.println("The two list are the same");
+                } else {
+                    System.out.println("The two list aren't the same");
                 }
                 System.out.println("==========================================");
                 System.out.println("Here are the values of the first list: " + LinkedList.listOne);
