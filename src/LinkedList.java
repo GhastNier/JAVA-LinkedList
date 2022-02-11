@@ -1,12 +1,10 @@
-import java.util.Objects;
-
 public class LinkedList {
     public Node head;
 
     //This was created in order to save time. Didn't take it from anywhere.
 
 
-    class Node {
+    static class Node {
         int data;
         Node next;
 
@@ -27,14 +25,6 @@ public class LinkedList {
 
     static LinkedList listOne = new LinkedList();
     static LinkedList listTwo = new LinkedList();
-
-    public boolean hasNext() {
-        if (head.next != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public static void main(String[] args) {
         listOne.add(1);
@@ -75,7 +65,6 @@ public class LinkedList {
         while (last.next != null)
             last = last.next;
         last.next = newNode;
-        return;
     }
 
 
@@ -170,15 +159,12 @@ public class LinkedList {
 
     // Same as Compare.
     public boolean magicCompare() {
-        int counter = 0;
         LinkedList tempL1 = new LinkedList();
         Node n1 = listOne.head;
 
         while (n1 != null) {
             tempL1.add(n1.data);
             n1 = n1.next;
-            counter++;
-
         }
         Node t2 = listTwo.head;
         if (listOne.size() != listTwo.size() || listTwo.size() != listOne.size()) {
@@ -188,7 +174,7 @@ public class LinkedList {
             if (tempL1.contain(t2.data)) {
                 tempL1.remove(t2.data);
                 t2 = t2.next;
-                System.out.println("Temp List 1: " + tempL1 + " Number of passage : " + counter);
+                System.out.println("Temp List 1: " + tempL1);
                 System.out.println("List 2: " + listTwo );
             }
         return tempL1.size() == 0;
